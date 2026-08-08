@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Colludium | Game Studio</title>
+  <meta name="description" content="Colludium is a game studio focused on 2D, 3D, sandbox, and online game experiences." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #050b14;
+      --bg-soft: #0d1727;
+      --panel: rgba(15, 24, 38, 0.9);
+      --panel-strong: #101c2d;
+      --card: rgba(17, 27, 39, 0.9);
+      --line: rgba(148, 163, 184, 0.18);
+      --primary: #4ec9ff;
+      --primary-strong: #1db3ff;
+      --secondary: #8d7dff;
+      --text: #edf6ff;
+      --muted: #a7b5c6;
+      --white: #ffffff;
+      --shadow: rgba(5, 11, 20, 0.55);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: radial-gradient(circle at top, rgba(78, 201, 255, 0.18), transparent 30%), linear-gradient(180deg, var(--bg) 0%, #07111b 100%);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    .container { width: min(1180px, calc(100% - 32px)); margin: 0 auto; }
+    .section { padding: 90px 0; }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(5, 11, 20, 0.7);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(14px);
+    }
+
+    .navbar {
+      min-height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+    }
+
+    .brand-mark {
+      width: 28px;
+      height: 28px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: var(--bg);
+      font-size: 1rem;
+      box-shadow: 0 0 24px rgba(78, 201, 255, 0.5);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      color: var(--muted);
+      font-size: 0.96rem;
+    }
+
+    .nav-links a { transition: color 0.2s ease; }
+    .nav-links a:hover, .nav-links a:focus-visible { color: var(--primary); }
+
+    .nav-cta, .primary-button, .secondary-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 14px;
+      font-weight: 700;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .nav-cta, .primary-button {
+      background: linear-gradient(135deg, var(--primary), var(--primary-strong));
+      color: #06141d;
+      box-shadow: 0 10px 30px rgba(29, 179, 255, 0.35);
+    }
+
+    .nav-cta { padding: 12px 18px; font-size: 0.9rem; }
+    .primary-button, .secondary-button { padding: 16px 26px; }
+    .primary-button:hover, .secondary-button:hover, .nav-cta:hover { transform: translateY(-2px); }
+
+    .secondary-button {
+      border: 1px solid var(--line);
+      background: rgba(15, 24, 38, 0.6);
+      color: var(--text);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.18fr 0.82fr;
+      align-items: center;
+      gap: 36px;
+      padding-top: 88px;
+      padding-bottom: 42px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: 18px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .hero-copy h1,
+    .section-heading h2,
+    .cta-block h2 {
+      font-size: clamp(2.9rem, 4.8vw, 5rem);
+      line-height: 0.96;
+      letter-spacing: -0.06em;
+      margin-bottom: 18px;
+    }
+
+    .lead {
+      font-size: 1.12rem;
+      max-width: 620px;
+      color: var(--muted);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      margin-top: 30px;
+    }
+
+    .hero-metrics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 32px;
+      margin-top: 36px;
+    }
+
+    .hero-metrics div {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-width: 120px;
+    }
+
+    .hero-metrics strong {
+      font-size: 1.7rem;
+      letter-spacing: -0.04em;
+      color: var(--white);
+    }
+
+    .hero-metrics span {
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .hero-visual {
+      position: relative;
+      min-height: 560px;
+      display: grid;
+      place-items: center;
+      perspective: 1000px;
+    }
+
+    .visual-glow {
+      position: absolute;
+      width: 360px;
+      height: 360px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(78, 201, 255, 0.65), rgba(78, 201, 255, 0.12) 35%, transparent 72%);
+      filter: blur(18px);
+    }
+
+    .visual-card {
+      position: absolute;
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.35);
+    }
+
+    .card-main {
+      width: 250px;
+      height: 250px;
+      background: linear-gradient(180deg, rgba(17, 31, 47, 0.88), rgba(10, 20, 30, 0.96));
+      border-radius: 28px;
+      transform: rotateX(18deg) rotateY(-18deg);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 24px;
+      border-color: rgba(78, 201, 255, 0.4);
+    }
+
+    .card-badge {
+      align-self: flex-end;
+      font-size: 0.7rem;
+      padding: 6px 10px;
+      border-radius: 999px;
+      color: var(--primary);
+      border: 1px solid rgba(78, 201, 255, 0.4);
+      background: rgba(78, 201, 255, 0.08);
+    }
+
+    .card-icon {
+      font-size: 4.5rem;
+      color: var(--primary);
+      text-shadow: 0 0 20px rgba(78, 201, 255, 0.7);
+      text-align: center;
+    }
+
+    .card-name {
+      text-align: center;
+      font-size: 1.3rem;
+      font-weight: 700;
+    }
+
+    .card-mini {
+      width: 170px;
+      padding: 16px 18px;
+      border-radius: 18px;
+      background: rgba(16, 27, 39, 0.86);
+    }
+
+    .card-mini span {
+      display: block;
+      color: var(--primary);
+      font-size: 0.72rem;
+      margin-bottom: 8px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .card-mini strong { font-size: 1rem; }
+    .mini-left { left: 26px; bottom: 44px; transform: rotate(-5deg); }
+    .mini-right { right: 18px; top: 72px; transform: rotate(8deg); }
+
+    .partners { padding-top: 10px; padding-bottom: 10px; }
+    .partners span {
+      display: block;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      margin-bottom: 18px;
+    }
+
+    .partner-list {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 18px;
+      color: rgba(237, 246, 255, 0.8);
+      padding: 24px 0 6px;
+    }
+
+    .partner-list div {
+      display: grid;
+      place-items: center;
+      min-height: 70px;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: rgba(12, 20, 32, 0.8);
+      font-weight: 600;
+      letter-spacing: -0.04em;
+    }
+
+    .section-heading { margin-bottom: 36px; }
+    .section-heading h2 {
+      max-width: 760px;
+      font-size: clamp(2.2rem, 3.5vw, 4rem);
+      color: var(--text);
+    }
+
+    .center { text-align: center; }
+    .center .section-heading h2 { margin-inline: auto; }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .feature-card, .game-card, .stat-box, .cta-block {
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(15, 24, 38, 0.9), rgba(9, 18, 27, 0.88));
+      border-radius: 24px;
+      box-shadow: 0 28px 50px rgba(3, 7, 13, 0.28);
+    }
+
+    .feature-card { padding: 28px 24px; }
+    .icon {
+      width: 52px;
+      height: 52px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      background: rgba(78, 201, 255, 0.08);
+      color: var(--primary);
+      font-size: 1.6rem;
+      margin-bottom: 18px;
+    }
+
+    .feature-card h3 { font-size: 1.35rem; margin-bottom: 10px; }
+    .feature-card p { color: var(--muted); }
+
+    .showcase {
+      background: linear-gradient(180deg, rgba(10, 18, 28, 0.78), rgba(5, 11, 20, 0.95));
+    }
+
+    .game-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .game-card { overflow: hidden; }
+    .game-thumb {
+      height: 260px;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .thumb-one {
+      background: linear-gradient(135deg, rgba(78, 201, 255, 0.3), rgba(7, 18, 28, 0.8)), radial-gradient(circle at 30% 30%, rgba(255,255,255,0.2), transparent 28%), linear-gradient(160deg, #1a223d, #0f172a 55%, #050b14);
+    }
+
+    .thumb-two {
+      background: linear-gradient(135deg, rgba(141, 125, 255, 0.28), rgba(7, 18, 28, 0.8)), linear-gradient(160deg, #17192f, #0a1020 55%, #050b14);
+    }
+
+    .thumb-three {
+      background: linear-gradient(135deg, rgba(34, 197, 94, 0.25), rgba(7, 18, 28, 0.8)), linear-gradient(160deg, #1d2a22, #0a1714 55%, #050b14);
+    }
+
+    .thumb-four {
+      background: linear-gradient(135deg, rgba(249, 115, 22, 0.2), rgba(7, 18, 28, 0.8)), linear-gradient(160deg, #251d1b, #140f0f 55%, #050b14);
+    }
+
+    .game-body { padding: 22px 20px 24px; }
+    .tag {
+      display: inline-block;
+      padding: 7px 10px;
+      background: rgba(78, 201, 255, 0.08);
+      border: 1px solid rgba(78, 201, 255, 0.2);
+      color: var(--primary);
+      border-radius: 999px;
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .game-body h3 { margin-bottom: 8px; font-size: 1.5rem; }
+    .game-body p { color: var(--muted); }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .stat-box {
+      padding: 28px 20px;
+      text-align: center;
+    }
+
+    .stat-box strong {
+      display: block;
+      font-size: clamp(2rem, 2.5vw, 3rem);
+      margin-bottom: 10px;
+      letter-spacing: -0.05em;
+      color: var(--white);
+    }
+
+    .stat-box span { color: var(--muted); }
+
+    .cta-block {
+      margin: 0 auto 90px;
+      padding: 34px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      background: linear-gradient(135deg, rgba(20, 35, 49, 0.92), rgba(12, 18, 27, 0.9));
+    }
+
+    .cta-block h2 {
+      font-size: clamp(2rem, 3vw, 3.2rem);
+      margin-bottom: 0;
+    }
+
+    .site-footer {
+      border-top: 1px solid var(--line);
+      padding: 28px 0 52px;
+      background: rgba(5, 11, 20, 0.6);
+    }
+
+    .footer-content {
+      display: grid;
+      grid-template-columns: 1.4fr 0.7fr 0.9fr;
+      gap: 26px;
+      align-items: center;
+    }
+
+    .footer-brand p, .footer-meta p, .footer-links a { color: var(--muted); }
+    .small { font-size: 1.2rem; margin-bottom: 10px; }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .footer-meta { text-align: right; }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 980px) {
+      .hero, .feature-grid, .game-grid, .stats-grid, .footer-content { grid-template-columns: 1fr 1fr; }
+      .hero { grid-template-columns: 1fr; }
+      .feature-grid, .game-grid, .stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .cta-block { flex-direction: column; align-items: flex-start; }
+    }
+
+    @media (max-width: 760px) {
+      .navbar { flex-wrap: wrap; justify-content: center; padding: 18px 0; }
+      .nav-links {
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 12px 20px;
+      }
+      .feature-grid, .game-grid, .stats-grid, .partner-list, .footer-content { grid-template-columns: 1fr; }
+      .hero { padding-top: 64px; }
+      .hero-copy h1, .section-heading h2, .cta-block h2 { line-height: 1.02; }
+      .hero-metrics { gap: 18px; }
+      .cta-block { padding: 28px 20px; }
+      .footer-meta { text-align: left; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <nav class="navbar container">
+      <a href="#home" class="brand" aria-label="Colludium home">
+        <span class="brand-mark">C</span>
+        <span>Colludium</span>
+      </a>
+      <div class="nav-links">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#games">Games</a>
+        <a href="#studio">Studio</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <a class="nav-cta" href="#contact">Start a Project</a>
+    </nav>
+  </header>
+
+  <main id="home">
+    <section class="hero container">
+      <div class="hero-copy reveal">
+        <p class="eyebrow">Game studio • 2D • 3D • Sandbox • Online</p>
+        <h1>Build worlds players never want to leave.</h1>
+        <p class="lead">
+          We create immersive gaming experiences that blend creativity, technology,
+          and scalable online systems for ambitious communities.
+        </p>
+        <div class="hero-actions">
+          <a href="#games" class="primary-button">Explore Games</a>
+          <a href="#contact" class="secondary-button">Book a Demo</a>
+        </div>
+        <div class="hero-metrics">
+          <div>
+            <strong>120+</strong>
+            <span>game prototypes</span>
+          </div>
+          <div>
+            <strong>18M</strong>
+            <span>players reached</span>
+          </div>
+          <div>
+            <strong>9 yrs</strong>
+            <span>creative expertise</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-visual reveal">
+        <div class="visual-glow"></div>
+        <div class="visual-card card-main">
+          <div class="card-badge">Live</div>
+          <div class="card-icon">✦</div>
+          <div class="card-name">OpenWorld</div>
+        </div>
+        <div class="visual-card card-mini mini-left">
+          <span>2D</span>
+          <strong>Pixel Quest</strong>
+        </div>
+        <div class="visual-card card-mini mini-right">
+          <span>3D</span>
+          <strong>Skyforge</strong>
+        </div>
+      </div>
+    </section>
+
+    <section class="partners container reveal">
+      <span>Trusted by creators and publishers</span>
+      <div class="partner-list">
+        <div>GameForge</div>
+        <div>VoxelArc</div>
+        <div>SandboxX</div>
+        <div>Multiplayer Lab</div>
+        <div>Orbit Play</div>
+      </div>
+    </section>
+
+    <section id="about" class="section container reveal">
+      <div class="section-heading">
+        <p class="eyebrow">Why Colludium</p>
+        <h2>Powerful game systems for worlds that scale.</h2>
+      </div>
+
+      <div class="feature-grid">
+        <article class="feature-card">
+          <div class="icon">▣</div>
+          <h3>2D Game Design</h3>
+          <p>Fast, stylish, and highly engaging gameplay loops crafted for mobile and desktop players.</p>
+        </article>
+        <article class="feature-card">
+          <div class="icon">△</div>
+          <h3>3D Worlds</h3>
+          <p>Immersive environments, cinematic scenes, and performance-aware rendering for modern platforms.</p>
+        </article>
+        <article class="feature-card">
+          <div class="icon">◈</div>
+          <h3>Sandbox Creation</h3>
+          <p>Open-ended systems with player freedom, progression, discovery, and customization at the core.</p>
+        </article>
+        <article class="feature-card">
+          <div class="icon">◎</div>
+          <h3>Online Multiplayer</h3>
+          <p>Reliable live systems, matchmaking, communities, and social layers designed for sustained engagement.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="games" class="showcase section">
+      <div class="container reveal">
+        <div class="section-heading center">
+          <p class="eyebrow">Featured Experiences</p>
+          <h2>Genre-driven development for every kind of adventure.</h2>
+        </div>
+
+        <div class="game-grid">
+          <article class="game-card">
+            <div class="game-thumb thumb-one"></div>
+            <div class="game-body">
+              <span class="tag">2D</span>
+              <h3>Pixel Rift</h3>
+              <p>Action-packed dungeon exploration with responsive combat and deep progression.</p>
+            </div>
+          </article>
+
+          <article class="game-card">
+            <div class="game-thumb thumb-two"></div>
+            <div class="game-body">
+              <span class="tag">3D</span>
+              <h3>Skyforge</h3>
+              <p>Epic aerial battles, exploration, and a living open world with dynamic weather.</p>
+            </div>
+          </article>
+
+          <article class="game-card">
+            <div class="game-thumb thumb-three"></div>
+            <div class="game-body">
+              <span class="tag">Sandbox</span>
+              <h3>Wildlands</h3>
+              <p>Craft, survive, and build your own legacy in a rich, player-driven ecosystem.</p>
+            </div>
+          </article>
+
+          <article class="game-card">
+            <div class="game-thumb thumb-four"></div>
+            <div class="game-body">
+              <span class="tag">Online</span>
+              <h3>Nova Arena</h3>
+              <p>Competitive online battles built for teamwork, strategy, and long-term social play.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="studio" class="stats section container reveal">
+      <div class="section-heading">
+        <p class="eyebrow">Studio Performance</p>
+        <h2>Built for quality, scale, and player retention.</h2>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-box">
+          <strong>96%</strong>
+          <span>player satisfaction</span>
+        </div>
+        <div class="stat-box">
+          <strong>150+</strong>
+          <span>live updates shipped</span>
+        </div>
+        <div class="stat-box">
+          <strong>24/7</strong>
+          <span>live ops monitoring</span>
+        </div>
+        <div class="stat-box">
+          <strong>4.9/5</strong>
+          <span>studio rating</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-block container reveal">
+      <div>
+        <p class="eyebrow">Let’s create your next hit</p>
+        <h2>Turn your game vision into a playable experience.</h2>
+      </div>
+      <a href="#contact" class="primary-button">Start the Conversation</a>
+    </section>
+  </main>
+
+  <footer class="site-footer" id="contact">
+    <div class="container footer-content">
+      <div class="footer-brand">
+        <div class="brand small">
+          <span class="brand-mark">C</span>
+          <span>Colludium</span>
+        </div>
+        <p>Creating immersive worlds for players who love 2D, 3D, sandbox, and online adventures.</p>
+      </div>
+      <div class="footer-links">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#games">Games</a>
+        <a href="#studio">Studio</a>
+      </div>
+      <div class="footer-meta">
+        <p>hello@colludium.games</p>
+        <p>© <span id="year"></span> Colludium</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const year = document.getElementById('year');
+      if (year) year.textContent = new Date().getFullYear();
+
+      const revealItems = document.querySelectorAll('.reveal');
+      const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+
+      revealItems.forEach((item) => revealObserver.observe(item));
+    });
+  </script>
+</body>
+</html>
